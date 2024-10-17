@@ -17,16 +17,25 @@ def read_config(config_path):
 # Логирование действий в XML
 def log_action(log_path, action):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    if os.path.exists(log_path):
-        tree = ET.parse(log_path)
-        root = tree.getroot()
+
+    # Проверка на существование файла и его содержимого
+    if os.path.exists(log_path) and os.path.getsize(log_path) > 0:
+        try:
+            tree = ET.parse(log_path)
+            root = tree.getroot()
+        except ET.ParseError:
+            # Если файл поврежден, создаем новое дерево
+            root = ET.Element("log")
     else:
+        # Создаем новое дерево, если файл не существует или пуст
         root = ET.Element("log")
 
+    # Логирование действия
     event = ET.SubElement(root, "event")
     ET.SubElement(event, "action").text = action
     ET.SubElement(event, "timestamp").text = now
 
+    # Сохранение изменений в XML-файл
     tree = ET.ElementTree(root)
     tree.write(log_path)
 
@@ -82,6 +91,10 @@ def ls(vfs):
 
 
 def cd(vfs, path):
+    # Проверка на использование более чем двух точек подряд
+    if path.startswith('...') or '...' in path:
+        return "Error: More than two consecutive dots are not allowed in the directory path."
+
     try:
         vfs.change_directory(path)
         return f"Changed directory to {vfs.current_path}"
