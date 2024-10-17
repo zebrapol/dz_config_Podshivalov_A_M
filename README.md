@@ -121,16 +121,16 @@ log_path: Путь к XML-файлу для записи журнала дейс
 ZIP-файл, содержащий нужные файлы и директории для виртуальной файловой системы.<br/>
 Файл config.ini с необходимыми параметрами.<br/>
 ***
-ПРИМЕРЫ
+ПРИМЕРЫ<br/>
 ![image](https://github.com/user-attachments/assets/110e0053-04b5-49de-83db-0d68c58632f2)
 ***
-РЕЗУЛЬТАТЫ ПРОГОНА ТЕСТОВ
-C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M\.venv\bin\python.exe "C:/Program Files/JetBrains/PyCharm Community Edition 2023.3/plugins/python-ce/helpers/pycharm/_jb_unittest_runner.py" --path C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M\TestVirtualFileSystem.py 
-Testing started at 21:36 ...
-Launching unittests with arguments python -m unittest C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M\TestVirtualFileSystem.py in C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M
+РЕЗУЛЬТАТЫ ПРОГОНА ТЕСТОВ<br/>
+C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M\.venv\bin\python.exe "C:/Program Files/JetBrains/PyCharm Community Edition 2023.3/plugins/python-ce/helpers/pycharm/_jb_unittest_runner.py" --path C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M\TestVirtualFileSystem.py <br/>
+Testing started at 21:36 ...<br/>
+Launching unittests with arguments python -m unittest C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M\TestVirtualFileSystem.py in C:\Users\Andre\PycharmProjects\dz_config_Podshivalov_A_M<br/>
 
-Ran 10 tests in 0.095s
-OK
-Process finished with exit code 0
+Ran 10 tests in 0.095s<br/>
+OK<br/>
+Process finished with exit code 0<br/>
 ![image](https://github.com/user-attachments/assets/61f04c77-e20f-422b-a810-d5668ea975c7)
 
