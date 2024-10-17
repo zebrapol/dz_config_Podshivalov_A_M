@@ -6,13 +6,11 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import scrolledtext
 
-
 # Чтение конфигурационного файла
 def read_config(config_path):
     config = configparser.ConfigParser()
     config.read(config_path)
     return config['DEFAULT']['hostname'], config['DEFAULT']['vfs_path'], config['DEFAULT']['log_path']
-
 
 # Логирование действий в XML
 def log_action(log_path, action):
@@ -39,7 +37,6 @@ def log_action(log_path, action):
     tree = ET.ElementTree(root)
     tree.write(log_path)
 
-
 # Класс для работы с виртуальной файловой системой
 class VirtualFileSystem:
     def __init__(self, zip_path):
@@ -52,7 +49,16 @@ class VirtualFileSystem:
             zip_ref.extractall(self.root)
 
     def list_directory(self):
-        return os.listdir(self.current_path)
+        items = []
+        for item in os.listdir(self.current_path):
+            item_path = os.path.join(self.current_path, item)
+            # Получаем информацию о файле
+            stats = os.stat(item_path)
+            size = stats.st_size  # Размер в байтах
+            modified_time = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')  # Время изменения
+            item_type = 'Directory' if os.path.isdir(item_path) else 'File'
+            items.append(f"{item_type: <10} {size: <10} {modified_time} {item}")
+        return "\n".join(items)
 
     def change_directory(self, path):
         if path == '..':
@@ -81,14 +87,12 @@ class VirtualFileSystem:
         else:
             raise FileNotFoundError("File not found")
 
-
 # Основные команды (ls, cd, cat, chown, date)
 def ls(vfs):
     try:
-        return "\n".join(vfs.list_directory())
+        return vfs.list_directory()
     except Exception as e:
         return str(e)
-
 
 def cd(vfs, path):
     # Проверка на использование более чем двух точек подряд
@@ -100,7 +104,6 @@ def cd(vfs, path):
         return f"Changed directory to {vfs.current_path}"
     except Exception as e:
         return str(e)
-
 
 def cat(vfs, file_name):
     exact_file = os.path.join(vfs.current_path, file_name)
@@ -116,10 +119,8 @@ def cat(vfs, file_name):
 
     return "File not found"
 
-
 def date():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
 
 def chown(vfs, file_name, new_owner):
     try:
@@ -130,7 +131,6 @@ def chown(vfs, file_name, new_owner):
             return "File not found"
     except Exception as e:
         return str(e)
-
 
 # Основной цикл работы эмулятора с GUI на tkinter
 def run_shell(hostname, vfs_path, log_path):
@@ -190,7 +190,6 @@ def run_shell(hostname, vfs_path, log_path):
     terminal_output.bind('<Return>', handle_command)  # Привязка нажатия Enter к выполнению команды
 
     window.mainloop()
-
 
 # Запуск эмулятора
 if __name__ == "__main__":
